@@ -1,6 +1,5 @@
 package com.opendebate.messenger;
 
-import com.opendebate.messenger.discussion.DiscussionStore;
 import org.flywaydb.core.Flyway;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,19 +16,15 @@ public class MessengerApplication {
     }
 
     @Bean(initMethod = "migrate")
-    public Flyway flyway() {
-        final String DATA_SOURCE  = "jdbc:h2:file:./target/chat-history";
-        final String USER = "sa";
-        final String PASSWORD = null;
-
+    public Flyway flyway(Config config) {
         Flyway flyway = new Flyway();
-        flyway.setDataSource(DATA_SOURCE, USER, PASSWORD);
+        flyway.setDataSource(config.getDatasource(), config.getUsername(), config.getPassword());
         flyway.clean();
         return flyway;
     }
 
     @Bean
-    public EntityManagerFactory entityManagerFactory() {
-        return Persistence.createEntityManagerFactory("jimbo");
+    public EntityManagerFactory entityManagerFactory(Config config) {
+        return Persistence.createEntityManagerFactory(config.getPersistenceUnitName());
     }
 }

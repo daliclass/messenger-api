@@ -1,0 +1,3 @@
+persistenceUnitName: jimbo
+datasource: jdbc:h2:file:./target/chat-history
+username: sa

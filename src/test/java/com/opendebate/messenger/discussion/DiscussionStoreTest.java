@@ -1,7 +1,9 @@
 package com.opendebate.messenger.discussion;
 
+import com.opendebate.messenger.Config;
 import com.opendebate.messenger.MessengerApplication;
 import org.flywaydb.core.Flyway;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = MessengerApplication.class)
+@ContextConfiguration(classes = { MessengerApplication.class, Config.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DiscussionStoreTest {
 
