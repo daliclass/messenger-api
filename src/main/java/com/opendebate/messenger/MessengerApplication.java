@@ -4,7 +4,9 @@ import org.flywaydb.core.Flyway;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -26,5 +28,11 @@ public class MessengerApplication {
     @Bean
     public EntityManagerFactory entityManagerFactory(Config config) {
         return Persistence.createEntityManagerFactory(config.getPersistenceUnitName());
+    }
+
+    @Bean
+    @Scope(scopeName = "prototype")
+    public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
+        return entityManagerFactory.createEntityManager();
     }
 }

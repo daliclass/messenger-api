@@ -26,7 +26,7 @@ public class DiscussionControllerTest {
     public void whenCreatingANewDiscussionThenAddADiscussionToTheStore() {
         Discussion inputDiscussion = new Discussion();
         Discussion outputDiscussion = new Discussion();
-        when(discussionStore.createDiscussion(inputDiscussion)).thenReturn(outputDiscussion);
+        when(discussionStore.create(inputDiscussion)).thenReturn(outputDiscussion);
 
         DiscussionController discussionController = new DiscussionController(discussionStore);
         assertThat(discussionController.createDiscussion(inputDiscussion)).isEqualTo(outputDiscussion);
@@ -38,7 +38,7 @@ public class DiscussionControllerTest {
         discussions.add(new Discussion());
         discussions.add(new Discussion());
 
-        when(discussionStore.getDiscussions()).thenReturn(discussions);
+        when(discussionStore.getAll()).thenReturn(discussions);
 
         DiscussionController discussionController = new DiscussionController(discussionStore);
         assertThat(discussionController.getDiscussions()).isEqualTo(discussions);
@@ -50,7 +50,7 @@ public class DiscussionControllerTest {
         Discussion discussionUpdated = new Discussion();
         discussionUpdate.setTopic("foo");
 
-        when(discussionStore.updateDiscussion(1, discussionUpdate)).thenReturn(discussionUpdated);
+        when(discussionStore.update(1, discussionUpdate)).thenReturn(discussionUpdated);
 
         DiscussionController discussionController = new DiscussionController(discussionStore);
         assertThat(discussionController.updateDiscussion(1, discussionUpdate)).isEqualTo(discussionUpdated);
