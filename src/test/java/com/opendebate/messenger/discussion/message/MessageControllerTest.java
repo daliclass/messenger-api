@@ -24,17 +24,57 @@ public class MessageControllerTest {
     }
 
     @Test
-    public void whenMessagesAreRequestedForADiscussionThenReturnTheMessages() {
+    public void whenCreatingANewMessageThenDeferToTheStore() {
+        Message messageToPersist = createMessage();
+        when(messageStore.create(messageToPersist)).thenReturn(createMessage());
+        MessageController messageController = new MessageController(messageStore);
+        Message actualMessage = messageController.createMessage(messageToPersist);
+        assertThat(actualMessage).isEqualTo(messageToPersist);
+    }
+
+    @Test
+    public void whenMessagesAreRequestedForADiscussionThenLookForItInTheStore() {
+        List<Message> messages = new ArrayList();
+        when(messageStore.getAll(1)).thenReturn(messages);
+
+        MessageController messageController = new MessageController(messageStore);
+        List<Message> actualMessages = messageController.getMessagesForADiscussion(1);
+        assertThat(actualMessages).containsAll(messages);
+    }
+
+    @Test
+    public void whenGettingAMessageByIdThenLookForItInTheStore() {
+        when(messageStore.get(1)).thenReturn(createMessage());
+        MessageController messageController = new MessageController(messageStore);
+        Message message = messageController.getMessage(1);
+        assertThat(message).isEqualTo(createMessage());
+    }
+
+    @Test
+    public void whenUpdatingAMessageThenNotifyTheStore() {
+        Message updatedMessage = createMessage();
+        when(messageStore.update(1, updatedMessage)).thenReturn(createMessage());
+        MessageController messageController = new MessageController(messageStore);
+        Message message = messageController.updateMessage(1, updatedMessage);
+        assertThat(message).isEqualTo(createMessage());
+    }
+
+    @Test
+    public void whenDeletingAMessageThenNotifyTheStore() {
+        /* You might think this is strange to have a test that asserts nothing, I agree! It has marginal value
+         * however the test lived before the deleteMessage method so it served its purpose.
+         */
+
+        MessageController messageController = new MessageController(messageStore);
+        messageController.deleteMessage(1);
+    }
+
+    public Message createMessage() {
         Message message = new Message();
         message.setDiscussionId(1);
         message.setId(1);
         message.setMessage("message");
         message.setSide(Side.FOR);
-        List<Message> messages = new ArrayList();
-        when(messageStore.getAll(1)).thenReturn(messages);
-
-        MessageController messageController = new MessageController(messageStore);
-        List<Message> actualMessages = messageController.getAllMessages(1);
-        assertThat(actualMessages).containsAll(messages);
+        return message;
     }
 }
