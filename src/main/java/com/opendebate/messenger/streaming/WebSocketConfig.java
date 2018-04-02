@@ -8,8 +8,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -17,12 +16,12 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new MessagingWebSocketHandler(), "/di");
+        registry.addHandler(new MessagingWebSocketHandler(webSocketSessions()), "/di");
     }
 
     @Bean
     @Qualifier("webSocketSessions")
-    public Set<WebSocketSession> webSocketSessions() {
-        return new ConcurrentSkipListSet();
+    public ConcurrentHashMap<String, WebSocketSession> webSocketSessions() {
+        return new ConcurrentHashMap();
     }
 }
