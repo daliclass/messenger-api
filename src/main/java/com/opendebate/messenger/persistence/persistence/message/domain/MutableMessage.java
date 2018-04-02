@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "MutableMessage")
+@Table(name = "Message")
 public class MutableMessage {
     @Id
     private Integer id;

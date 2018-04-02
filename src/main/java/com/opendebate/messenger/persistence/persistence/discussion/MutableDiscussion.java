@@ -2,6 +2,7 @@ package com.opendebate.messenger.persistence.persistence.discussion;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.opendebate.messenger.common.Discussion;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "MutableDiscussion")
+@Table(name = "Discussion")
 @NoArgsConstructor
 public class MutableDiscussion {
 
@@ -22,5 +23,9 @@ public class MutableDiscussion {
     @JsonCreator
     public MutableDiscussion(@JsonProperty("topic") String topic) {
         this.topic = topic;
+    }
+
+    public Discussion convertToDiscussion() {
+        return new Discussion(getId(), getTopic());
     }
 }

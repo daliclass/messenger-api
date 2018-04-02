@@ -1,5 +1,6 @@
 package com.opendebate.messenger.streaming;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /*
 * Responsible for handling the addition and removal of WebSocketSession's based on client interaction
 * */
-
+@Component
 public class MessagingWebSocketHandler extends TextWebSocketHandler {
 
     private final ConcurrentHashMap<String, WebSocketSession> webSocketSessions;
