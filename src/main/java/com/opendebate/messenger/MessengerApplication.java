@@ -35,4 +35,6 @@ public class MessengerApplication {
     public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
         return entityManagerFactory.createEntityManager();
     }
+
+
 }

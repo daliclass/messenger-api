@@ -1,7 +1,7 @@
-package com.opendebate.messenger.discussion.message;
+package com.opendebate.messenger.persistence.persistence.message;
 
-import com.opendebate.messenger.discussion.message.domain.Message;
-import com.opendebate.messenger.discussion.message.domain.Side;
+import com.opendebate.messenger.persistence.persistence.message.domain.MutableMessage;
+import com.opendebate.messenger.common.Side;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -25,38 +25,38 @@ public class MessageControllerTest {
 
     @Test
     public void whenCreatingANewMessageThenDeferToTheStore() {
-        Message messageToPersist = createMessage();
-        when(messageStore.create(messageToPersist)).thenReturn(createMessage());
+        MutableMessage mutableMessageToPersist = createMessage();
+        when(messageStore.create(mutableMessageToPersist)).thenReturn(createMessage());
         MessageController messageController = new MessageController(messageStore);
-        Message actualMessage = messageController.createMessage(messageToPersist);
-        assertThat(actualMessage).isEqualTo(messageToPersist);
+        MutableMessage actualMutableMessage = messageController.createMessage(mutableMessageToPersist);
+        assertThat(actualMutableMessage).isEqualTo(mutableMessageToPersist);
     }
 
     @Test
     public void whenMessagesAreRequestedForADiscussionThenLookForItInTheStore() {
-        List<Message> messages = new ArrayList();
-        when(messageStore.getAll(1)).thenReturn(messages);
+        List<MutableMessage> mutableMessages = new ArrayList();
+        when(messageStore.getAll(1)).thenReturn(mutableMessages);
 
         MessageController messageController = new MessageController(messageStore);
-        List<Message> actualMessages = messageController.getMessagesForADiscussion(1);
-        assertThat(actualMessages).containsAll(messages);
+        List<MutableMessage> actualMutableMessages = messageController.getMessagesForADiscussion(1);
+        assertThat(actualMutableMessages).containsAll(mutableMessages);
     }
 
     @Test
     public void whenGettingAMessageByIdThenLookForItInTheStore() {
         when(messageStore.get(1)).thenReturn(createMessage());
         MessageController messageController = new MessageController(messageStore);
-        Message message = messageController.getMessage(1);
-        assertThat(message).isEqualTo(createMessage());
+        MutableMessage mutableMessage = messageController.getMessage(1);
+        assertThat(mutableMessage).isEqualTo(createMessage());
     }
 
     @Test
     public void whenUpdatingAMessageThenNotifyTheStore() {
-        Message updatedMessage = createMessage();
-        when(messageStore.update(1, updatedMessage)).thenReturn(createMessage());
+        MutableMessage updatedMutableMessage = createMessage();
+        when(messageStore.update(1, updatedMutableMessage)).thenReturn(createMessage());
         MessageController messageController = new MessageController(messageStore);
-        Message message = messageController.updateMessage(1, updatedMessage);
-        assertThat(message).isEqualTo(createMessage());
+        MutableMessage mutableMessage = messageController.updateMessage(1, updatedMutableMessage);
+        assertThat(mutableMessage).isEqualTo(createMessage());
     }
 
     @Test
@@ -69,12 +69,12 @@ public class MessageControllerTest {
         messageController.deleteMessage(1);
     }
 
-    public Message createMessage() {
-        Message message = new Message();
-        message.setDiscussionId(1);
-        message.setId(1);
-        message.setMessage("message");
-        message.setSide(Side.FOR);
-        return message;
+    public MutableMessage createMessage() {
+        MutableMessage mutableMessage = new MutableMessage();
+        mutableMessage.setDiscussionId(1);
+        mutableMessage.setId(1);
+        mutableMessage.setMessage("mutableMessage");
+        mutableMessage.setSide(Side.FOR);
+        return mutableMessage;
     }
 }

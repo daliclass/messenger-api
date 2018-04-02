@@ -1,4 +1,4 @@
-package com.opendebate.messenger.discussion;
+package com.opendebate.messenger.persistence.persistence.discussion;
 
 import com.opendebate.messenger.Config;
 import com.opendebate.messenger.MessengerApplication;
@@ -27,11 +27,11 @@ public class DiscussionStoreTest {
     @Autowired
     EntityManager entityManager;
 
-    public Discussion createDiscussion(Integer id) {
-        Discussion discussion = new Discussion();
-        discussion.setTopic("the best topic");
-        discussion.setId(id);
-        return discussion;
+    public MutableDiscussion createDiscussion(Integer id) {
+        MutableDiscussion mutableDiscussion = new MutableDiscussion();
+        mutableDiscussion.setTopic("the best topic");
+        mutableDiscussion.setId(id);
+        return mutableDiscussion;
     }
 
     @Test
@@ -44,8 +44,8 @@ public class DiscussionStoreTest {
     @Test
     public void B_whenSelectingADiscussionThenGetTheDiscussion() {
         DiscussionStore discussionStore = new DiscussionStore(entityManager);
-        Discussion discussion = createDiscussion(2);
-        assertThat(discussionStore.get(discussion.getId())).isEqualTo(discussion);
+        MutableDiscussion mutableDiscussion = createDiscussion(2);
+        assertThat(discussionStore.get(mutableDiscussion.getId())).isEqualTo(mutableDiscussion);
     }
 
     @Test

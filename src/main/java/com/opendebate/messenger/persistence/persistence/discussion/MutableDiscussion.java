@@ -1,4 +1,4 @@
-package com.opendebate.messenger.discussion;
+package com.opendebate.messenger.persistence.persistence.discussion;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,16 +11,16 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "Discussion")
+@Table(name = "MutableDiscussion")
 @NoArgsConstructor
-public class Discussion {
+public class MutableDiscussion {
 
     @Id
     private int id;
     private String topic;
 
     @JsonCreator
-    public Discussion(@JsonProperty("topic") String topic) {
+    public MutableDiscussion(@JsonProperty("topic") String topic) {
         this.topic = topic;
     }
 }

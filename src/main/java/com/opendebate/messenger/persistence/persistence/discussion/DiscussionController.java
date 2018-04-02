@@ -1,4 +1,4 @@
-package com.opendebate.messenger.discussion;
+package com.opendebate.messenger.persistence.persistence.discussion;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -14,22 +14,22 @@ public class DiscussionController {
     }
 
     @PostMapping(value = "discussions", produces="application/json", consumes="application/json")
-    public Discussion createDiscussion(@RequestBody Discussion discussion) {
-        return discussionStore.create(discussion);
+    public MutableDiscussion createDiscussion(@RequestBody MutableDiscussion mutableDiscussion) {
+        return discussionStore.create(mutableDiscussion);
     }
 
     @GetMapping(value = "discussions", produces = "application/json")
-    public List<Discussion> getDiscussions() {
+    public List<MutableDiscussion> getDiscussions() {
         return discussionStore.getAll();
     }
 
     @PutMapping(value = "discussions/{id}", consumes = "application/json")
-    public Discussion updateDiscussion(@PathVariable(value = "id") Integer id, @RequestBody Discussion updateDiscussion) {
-        return discussionStore.update(id, updateDiscussion);
+    public MutableDiscussion updateDiscussion(@PathVariable(value = "id") Integer id, @RequestBody MutableDiscussion updateMutableDiscussion) {
+        return discussionStore.update(id, updateMutableDiscussion);
     }
 
     @GetMapping(value = "discussions/{id}", produces = "application/json")
-    public Discussion getDiscussion(@PathVariable(value="id") Integer id) {
+    public MutableDiscussion getDiscussion(@PathVariable(value="id") Integer id) {
         return discussionStore.get(id);
     }
 }

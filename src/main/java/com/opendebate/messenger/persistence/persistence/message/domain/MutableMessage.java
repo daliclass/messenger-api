@@ -1,5 +1,6 @@
-package com.opendebate.messenger.discussion.message.domain;
+package com.opendebate.messenger.persistence.persistence.message.domain;
 
+import com.opendebate.messenger.common.Side;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,8 +11,8 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "Message")
-public class Message {
+@Table(name = "MutableMessage")
+public class MutableMessage {
     @Id
     private Integer id;
     private Integer discussionId;
